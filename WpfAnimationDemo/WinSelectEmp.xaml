@@ -1,0 +1,294 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="WpfAnimationDemo.WinSelectEmp"
+        x:Name="Window"
+        Title="选择播放历史轨迹的人员"
+        Width="859"
+        Height="473"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Closing="Window_Closing"
+        Loaded="Window_Loaded"
+        Icon="/WpfAnimationDemo;component/Images/Select.ico">
+    <Window.Resources>
+
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot"
+          Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="0" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="2" Background="#FFEDF5F5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="390" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="390" />
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgMain"
+                      Margin="0"
+                      Background="{x:Null}"
+                      RowHeight="25"
+                      HeadersVisibility="Column"
+                      RowHeaderWidth="50"
+                      HorizontalGridLinesBrush="{DynamicResource BrushHorLine}"
+                      IsSynchronizedWithCurrentItem="True"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center"
+                      PreviewMouseLeftButtonUp="dgMain_PreviewMouseLeftButtonUp"
+                      RowBackground="{DynamicResource BrushRowBak}"
+                      AlternatingRowBackground="{DynamicResource BrushAltern}"
+                      VerticalGridLinesBrush="{DynamicResource BrushVerLine}"
+                      Style="{DynamicResource DataGridStyleMain}">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="0.3*"
+                                            Binding="{Binding IsSelected}">
+                        <DataGridCheckBoxColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox Click="CheckBox_Click"
+                                          x:Name="chbSelectAll"
+                                          ToolTip="全选/取消全选" />
+                            </DataTemplate>
+                        </DataGridCheckBoxColumn.HeaderTemplate>
+                    </DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="标识卡"
+                                        Width="0.6*"
+                                        Binding="{Binding BlockID}" />
+                    <DataGridTextColumn Header="员工姓名"
+                                        Width="1*"
+                                        Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="部门"
+                                        Width="0.8*"
+                                        Binding="{Binding DeptName}" />
+                    <DataGridTextColumn Header="职务"
+                                        Width="0.8*"
+                                        Binding="{Binding DutyName}" />
+                    <DataGridTextColumn Header="工种"
+                                        Width="0.8*"
+                                        Binding="{Binding WorkTypeName}" />
+                </DataGrid.Columns>
+                <!--<DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="LightBlue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>-->
+            </DataGrid>
+            <DataGrid x:Name="dgMainSelected"
+                      Margin="0"
+                      Background="{x:Null}"
+                      RowHeight="25"
+                      HeadersVisibility="Column"
+                      RowHeaderWidth="50"
+                      HorizontalGridLinesBrush="{DynamicResource BrushHorLine}"
+                      IsSynchronizedWithCurrentItem="True"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center"
+                      RowBackground="{DynamicResource BrushRowBak}"
+                      AlternatingRowBackground="{DynamicResource BrushAltern}"
+                      VerticalGridLinesBrush="{DynamicResource BrushVerLine}"
+                      Style="{DynamicResource DataGridStyleMain}"
+                      Grid.Column="2"
+                      PreviewMouseLeftButtonUp="dgSelected_PreviewMouseLeftButtonUp">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="0.3*"
+                                            Binding="{Binding IsSelected}">
+                        <DataGridCheckBoxColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox Click="CheckBoxSelected_Click"
+                                          x:Name="chbSelectAll"
+                                          ToolTip="全选/取消全选" />
+                            </DataTemplate>
+                        </DataGridCheckBoxColumn.HeaderTemplate>
+                    </DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="标识卡"
+                                        Width="0.6*"
+                                        Binding="{Binding BlockID}" />
+                    <DataGridTextColumn Header="员工姓名"
+                                        Width="1*"
+                                        Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="部门"
+                                        Width="0.8*"
+                                        Binding="{Binding DeptName}" />
+                    <DataGridTextColumn Header="职务"
+                                        Width="0.8*"
+                                        Binding="{Binding DutyName}" />
+                    <DataGridTextColumn Header="工种"
+                                        Width="0.8*"
+                                        Binding="{Binding WorkTypeName}" />
+                </DataGrid.Columns>
+                <!--<DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="LightBlue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>-->
+            </DataGrid>
+            <Button
+                    Style="{DynamicResource ButtonStyleRight}"
+                    Height="25"
+                    Margin="4,170,4,0"
+                    x:Name="btnAdd"
+                    Click="btnAdd_Click"
+                    Grid.Column="1"
+                    VerticalAlignment="Top" />
+            <Button
+                    Height="25"
+                    x:Name="btnRemove"
+                    Style="{DynamicResource ButtonStyleLeft}"
+                    Margin="4,210,4,0"
+                    Click="btnRemove_Click"
+                    Grid.Column="1"
+                    VerticalAlignment="Top" >
+            	<Image Source="Images/Remove.png"/>
+            </Button>
+        </Grid>
+        <Border Margin="0"
+                Background="{DynamicResource BrushAdd}">
+            <Grid x:Name="GridTop">
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="0,0,5,0">
+                    <Button Content="查 询"
+                            Width="60"
+                            Style="{DynamicResource SimpleButton}"
+                            Height="25"
+                            Margin="3,0,0,0"
+                            x:Name="btnQuery"
+                            IsEnabled="{Binding IsChecked, ElementName=rbtNopoint}"
+                            Click="btnQuery_Click" />
+                    <Button Content="重 置"
+                            Height="25"
+                            x:Name="btnReset"
+                            IsEnabled="{Binding IsChecked, ElementName=rbtNopoint}"
+                            Style="{DynamicResource SimpleButton}"
+                            Width="60"
+                            Margin="3,0,0,0"
+                            Click="btnReset_Click" />
+                </StackPanel>
+                <StackPanel Margin="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Height="25.147">
+                    <TextBlock Margin="5,0,0,0"
+                               TextWrapping="Wrap"
+                               Text="部门"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                    <ComboBox Margin="1,0,0,0"
+                              Width="90"
+                              Style="{DynamicResource SimpleComboBox}"
+                              x:Name="cmbDept"
+                              DisplayMemberPath="DeptName" />
+                    <TextBlock Margin="5,0,0,0"
+                               TextWrapping="Wrap"
+                               Text="职务"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                    <ComboBox Margin="1,0,0,0"
+                              Width="90"
+                              Style="{DynamicResource SimpleComboBox}"
+                              x:Name="cmbDuty"
+                              DisplayMemberPath="DutyName" />
+                    <TextBlock Margin="5,0,0,0"
+                               TextWrapping="Wrap"
+                               Text="工种"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                    <ComboBox Margin="1,0,0,0"
+                              Width="90"
+                              Style="{DynamicResource SimpleComboBox}"
+                              x:Name="cmbWorkType"
+                              DisplayMemberPath="WorkTypeName" />
+                    <TextBlock Margin="5,0,0,0"
+                               TextWrapping="Wrap"
+                               Text="卡号"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                    <TextBox Margin="1,0,0,0"
+                             TextWrapping="Wrap"
+                             Style="{DynamicResource SimpleTextBox}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Width="90"
+                             x:Name="tbBlock"
+                             TextChanged="tbBlock_TextChanged"
+                             KeyUp="tbBlock_KeyUp" />
+                    <TextBlock Margin="5,0,0,0"
+                               TextWrapping="Wrap"
+                               Text="姓名"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White" />
+                    <TextBox Margin="1,0,0,0"
+                             TextWrapping="Wrap"
+                             Width="90"
+                             Style="{DynamicResource SimpleTextBox}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             x:Name="tbName"
+                             KeyUp="tbBlock_KeyUp" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        <StackPanel Margin="0,1"
+                    Orientation="Horizontal"
+                    Grid.Row="1"
+                    Background="{DynamicResource BrushAdd}">
+            <RadioButton x:Name="rbtNopoint"
+                         Content="未加入人员"
+                         Width="84"
+                         Style="{DynamicResource RadioButtonStyleLeader}"
+                         Height="25"
+                         Foreground="White"
+                         Checked="rbtPoint_Checked"
+                         HorizontalAlignment="Left"
+                         Margin="2,3,0,10" />
+            <RadioButton x:Name="rbtAppoint"
+                         Content="已加入人员"
+                         Width="84"
+                         Style="{DynamicResource RadioButtonStyleLeader}"
+                         Height="25"
+                         Foreground="White"
+                         Checked="rbtPoint_Checked"
+                         HorizontalAlignment="Left"
+                         Margin="2,3,0,10" />
+        </StackPanel>
+    </Grid>
+</Window>
